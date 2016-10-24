@@ -1,0 +1,2 @@
+br.com.ackta.clinical.controller.validators.MonetaryAmountDecimalMaxValidator
+br.com.ackta.clinical.controller.validators.MonetaryAmountDecimalMinValidator

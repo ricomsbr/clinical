@@ -1,0 +1,75 @@
+logging:
+  file: clinical.log
+  level:
+    org.springframework.web: ERROR
+    org.springframework.web.client: ERROR
+    org.springframework.jdbc: ERROR
+    org.springframework.boot: INFO
+    org.springframework.security: INFO
+    br.com.ackta.clinical: INFO
+  
+spring:
+  profiles:
+    active: test
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      indent-output: true
+    default-property-inclusion: non-empty
+  mvc:
+    locale: pt_BR
+    date-format: dd/MM/yyyy
+  jpa:
+    show-sql: true
+    generate-ddl: true
+
+server:
+  port: 9051
+
+cluster:
+  group:
+    name: desenv
+    
+---
+
+spring:
+  profiles: tests
+  session:
+    store-type: none
+  datasource:
+    url: jdbc:h2:mem:mydb;INIT=CREATE SCHEMA IF NOT EXISTS dap;DB_CLOSE_ON_EXIT=FALSE;Mode=Oracle;
+  jpa: 
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    
+---
+
+spring:
+  profiles: oracle
+  datasource:
+    url: jdbc:oracle:thin:@carrera.ACKTA.br:1521:dapteste
+    username: reservas2
+    password: reservas2
+    driver-class-name: oracle.jdbc.OracleDriver
+    tomcat:
+      max-active: 5
+      min-idle: 1
+
+---
+
+spring:
+  profiles: development
+  datasource:
+    url: jdbc:h2:mem:mydb;INIT=CREATE SCHEMA IF NOT EXISTS dap;DB_CLOSE_ON_EXIT=FALSE;Mode=Oracle;
+  jpa: 
+    database-platform: org.hibernate.dialect.Oracle10gDialect    
+    
+---
+
+spring:
+  profiles: development1
+  jpa.database-platform: org.hibernate.dialect.Oracle10gDialect
+  jpa.generate-ddl: true
+  jpa.hibernate.ddl-auto: create-drop
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=Oracle;
+    driver-class-name: org.h2.Driver
