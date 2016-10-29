@@ -1,7 +1,7 @@
 /*
  * DapLegacyUser.java		26/05/2015
  *
- * Copyright (C) 2015 FAPESP. All Rights Reserved.
+ * Copyright (C) 2016 ACKTA. All Rights Reserved.
  */
 package br.com.ackta.clinical.application.security;
 
@@ -127,31 +127,16 @@ public class UserLogin implements IUserLogin, UserDetails {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see br.fapesp.security.User#getId()
-	 */
 	@Override
 	public Long getId() {
 		return id;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see br.fapesp.security.User#getUsername()
-	 */
 	@Override
 	public String getUsername() {
 		return username;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see br.fapesp.security.User#getName()
-	 */
 	@Override
 	public String getName() {
 		return name;

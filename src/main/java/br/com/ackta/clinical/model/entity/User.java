@@ -30,7 +30,7 @@ public class User implements IUser {
 	@Id
 	@SequenceGenerator(name = "sq_user", sequenceName = "sq_user")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_user")
-	@Column(name = "id_user")
+	@Column(name = "id")
 	private Long id;
 
 	@Version
@@ -179,17 +179,6 @@ public class User implements IUser {
 	 */
 	public User merge(User user) {
 		BeanUtils.copyProperties(this, user, UNMERGED_PROPERTIES);
-
-		// user.setPassword(this.password);
-		// user.setUsername(this.username);
-		// user.setBirthDate(this.birthDate);
-		// user.setGender(this.gender);
-		// user.setHeight(this.height);
-		// user.setMail(this.mail);
-		// user.setMobile(this.mobile);
-		// user.setWeight(this.weight);
-		// user.setName(this.name);
-
 		return user;
 	}
 }

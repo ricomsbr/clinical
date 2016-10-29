@@ -1,7 +1,7 @@
 /*
  * MonetaryAmountNode.java		27/10/2015
- * 
- * Copyright (C) 2015 FAPESP. All Rights Reserved.
+ *
+ * Copyright (C) 2016 ACKTA. All Rights Reserved.
  */
 package br.com.ackta.clinical.application.serializer;
 
@@ -14,32 +14,32 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * 
- * 
- * @author	RMendonca
+ *
+ *
+ * @author RMendonca
  * @version @version@
- * @since	@since@
+ * @since @since@
  */
 public class MonetaryAmountNode {
-    private final BigDecimal amount;
+	private final BigDecimal amount;
 
-    private final CurrencyUnit currency;
+	private final CurrencyUnit currency;
 
-    @JsonCreator
-    MonetaryAmountNode(@JsonProperty("amount") final BigDecimal amount,
-            @JsonProperty("currency") final CurrencyUnit currency) {
-        this.amount = amount;
-        this.currency = currency;
-    }
+	@JsonCreator
+	MonetaryAmountNode(@JsonProperty("amount") final BigDecimal amount,
+			@JsonProperty("currency") final CurrencyUnit currency) {
+		this.amount = amount;
+		this.currency = currency;
+	}
 
-    @JsonGetter("amount")
-    BigDecimal getAmount() {
-        return amount;
-    }
+	@JsonGetter("amount")
+	BigDecimal getAmount() {
+		return amount;
+	}
 
-    @JsonGetter("currency")
-    CurrencyUnit getCurrency() {
-        return currency;
-    }
+	@JsonGetter("currency")
+	CurrencyUnit getCurrency() {
+		return currency;
+	}
 
 }

@@ -16,9 +16,12 @@ import org.springframework.beans.BeanUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.ackta.clinical.model.entity.Gender;
+import br.com.ackta.clinical.model.entity.IUser;
 import br.com.ackta.clinical.model.entity.User;
 
-public class UserTO {
+public class UserTO implements IUser {
+
+	private static final long serialVersionUID = -6681492623640858693L;
 
 	private Long id;
 
@@ -60,14 +63,17 @@ public class UserTO {
 		}
 	}
 
+	@Override
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	@Override
 	public boolean isActive() {
 		return active;
 	}
@@ -76,10 +82,12 @@ public class UserTO {
 		this.active = active;
 	}
 
+	@Override
 	public Long getVersion() {
 		return version;
 	}
 
+	@Override
 	public void setVersion(Long version) {
 		this.version = version;
 	}
@@ -92,6 +100,7 @@ public class UserTO {
 		this.username = username;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -108,6 +117,7 @@ public class UserTO {
 		this.password = password;
 	}
 
+	@Override
 	public LocalDate getBirthDate() {
 		return birthDate;
 	}
@@ -116,6 +126,7 @@ public class UserTO {
 		this.birthDate = birthDate;
 	}
 
+	@Override
 	public Gender getGender() {
 		return gender;
 	}
@@ -124,6 +135,7 @@ public class UserTO {
 		this.gender = gender;
 	}
 
+	@Override
 	public Quantity<Length> getHeight() {
 		return height;
 	}
@@ -132,6 +144,7 @@ public class UserTO {
 		this.height = height;
 	}
 
+	@Override
 	public String getMail() {
 		return mail;
 	}
@@ -140,6 +153,7 @@ public class UserTO {
 		this.mail = mail;
 	}
 
+	@Override
 	public String getMobile() {
 		return mobile;
 	}
@@ -148,6 +162,7 @@ public class UserTO {
 		this.mobile = mobile;
 	}
 
+	@Override
 	public Quantity<Mass> getWeight() {
 		return weight;
 	}

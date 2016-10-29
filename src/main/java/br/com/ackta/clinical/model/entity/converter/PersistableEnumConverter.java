@@ -1,7 +1,7 @@
 /*
  * AccountTypeConverter.java		10/05/2016
  *
- * Copyright (C) 2015 ACKTA. All Rights Reserved.
+ * Copyright (C) 2016 ACKTA. All Rights Reserved.
  */
 package br.com.ackta.clinical.model.entity.converter;
 

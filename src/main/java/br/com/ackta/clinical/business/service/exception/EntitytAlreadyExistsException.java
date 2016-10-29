@@ -1,7 +1,7 @@
 /*
  * ObjectNotFoundException.java		27/05/2015
  *
- * Copyright (C) 2015 ACKTA. All Rights Reserved.
+ * Copyright (C) 2016 ACKTA. All Rights Reserved.
  */
 package br.com.ackta.clinical.business.service.exception;
 
@@ -22,6 +22,10 @@ public class EntitytAlreadyExistsException extends EntityException {
 
 	public EntitytAlreadyExistsException(Class<? extends IPersistable> entityClass1) {
 		super(entityClass1);
+	}
+
+	public EntitytAlreadyExistsException(Class<? extends IPersistable> entityClass1, String... messageParameters) {
+		super(entityClass1, messageParameters);
 	}
 
 	@Override

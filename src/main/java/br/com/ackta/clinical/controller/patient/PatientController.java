@@ -1,7 +1,7 @@
 /**
  *
  */
-package br.com.ackta.clinical.controller.user;
+package br.com.ackta.clinical.controller.patient;
 
 import javax.validation.Valid;
 
@@ -16,35 +16,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ackta.clinical.business.helper.UserHelper;
-import br.com.ackta.clinical.business.helper.UserTO;
+import br.com.ackta.clinical.business.helper.PatientHelper;
+import br.com.ackta.clinical.business.helper.PatientTO;
 
-@RestController(value = "userController")
-@RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RestController(value = "patientController")
+@RequestMapping(value = "/patient", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 // @Validated
-public class UserController {
+public class PatientController {
 
-	private final UserHelper helper;
+	private final PatientHelper helper;
 
-	private static Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(PatientController.class);
 
 	@Autowired
-	public UserController(UserHelper helper1) {
+	public PatientController(PatientHelper helper1) {
 		this.helper = helper1;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public UserTO save(@RequestBody @Valid UserTO userTO) {
-		LOGGER.info("Method save initialized. Set size: [{}] ", new Object[] { userTO });
-		UserTO result = null;
-		result = helper.save(userTO);
-		LOGGER.debug("[{}] itens saved as User.", result);
+	public PatientTO save(@RequestBody @Valid PatientTO patientTO) {
+
+		LOGGER.info("Method save initialized. Set size: [{}] ", new Object[] { patientTO });
+		PatientTO result = null;
+		result = helper.save(patientTO);
+		LOGGER.debug("[{}] itens saved as Patient.", result);
 		return result;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		LOGGER.info("Method delete initialized. Remove user id ", new Object[] { id });
+		LOGGER.info("Method delete initialized. Remove patient id ", new Object[] { id });
 		ResponseEntity<Void> result = helper.delete(id);
 		return result;
 	}

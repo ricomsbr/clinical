@@ -1,3 +1,6 @@
+server:
+  port: 9051
+  
 logging:
   file: clinical.log
   level:
@@ -10,7 +13,7 @@ logging:
   
 spring:
   profiles:
-    active: test
+    active: developement,oracle
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     serialization:
@@ -22,9 +25,6 @@ spring:
   jpa:
     show-sql: true
     generate-ddl: true
-
-server:
-  port: 9051
 
 cluster:
   group:
@@ -62,14 +62,4 @@ spring:
     url: jdbc:h2:mem:mydb;INIT=CREATE SCHEMA IF NOT EXISTS dap;DB_CLOSE_ON_EXIT=FALSE;Mode=Oracle;
   jpa: 
     database-platform: org.hibernate.dialect.Oracle10gDialect    
-    
----
-
-spring:
-  profiles: development1
-  jpa.database-platform: org.hibernate.dialect.Oracle10gDialect
-  jpa.generate-ddl: true
-  jpa.hibernate.ddl-auto: create-drop
-  datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=Oracle;
-    driver-class-name: org.h2.Driver
+ 

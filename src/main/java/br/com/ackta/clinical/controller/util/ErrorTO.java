@@ -1,16 +1,16 @@
 /*
  * ErrorTO.java		03/11/2015
- * 
- * Copyright (C) 2015 FAPESP. All Rights Reserved.
+ *
+ * Copyright (C) 2016 ACKTA. All Rights Reserved.
  */
 package br.com.ackta.clinical.controller.util;
 
 /**
- * 
- * 
- * @author	RMendonca
+ *
+ *
+ * @author RMendonca
  * @version @version@
- * @since	@since@
+ * @since @since@
  */
 public class ErrorTO {
 	private final String message;
@@ -26,6 +26,5 @@ public class ErrorTO {
 	public String getMessage() {
 		return message;
 	}
-	
-	
+
 }

@@ -1,10 +1,13 @@
 /*
  * ObjectNotFoundException.java		27/05/2015
  *
- * Copyright (C) 2015 ACKTA. All Rights Reserved.
+ * Copyright (C) 2016 ACKTA. All Rights Reserved.
  */
 package br.com.ackta.clinical.business.service.exception;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import br.com.ackta.clinical.model.entity.IPersistable;
@@ -22,11 +25,19 @@ abstract class EntityException extends RuntimeException {
 
 	private static final String SEPARATOR = ".";
 
-	public Class<? extends IPersistable> entityClass;
+	private Class<? extends IPersistable> entityClass;
+
+	private List<String> messageParameters = Collections.emptyList();
 
 	public EntityException(Class<? extends IPersistable> entityClass1) {
 		super();
 		this.entityClass = entityClass1;
+	}
+
+	public EntityException(Class<? extends IPersistable> entityClass1, String... messageParameters1) {
+		super();
+		this.entityClass = entityClass1;
+		this.messageParameters = Arrays.asList(messageParameters1);
 	}
 
 	public abstract String getDefaultMessage();
@@ -42,4 +53,9 @@ abstract class EntityException extends RuntimeException {
 		}
 		return result;
 	}
+
+	public List<String> getMessageParameters() {
+		return messageParameters;
+	}
+
 }

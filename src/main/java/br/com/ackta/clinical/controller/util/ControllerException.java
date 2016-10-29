@@ -1,7 +1,7 @@
 /*
  * ControllerException.java		22/10/2015
  *
- * Copyright (C) 2015 FAPESP. All Rights Reserved.
+ * Copyright (C) 2016 ACKTA. All Rights Reserved.
  */
 package br.com.ackta.clinical.controller.util;
 

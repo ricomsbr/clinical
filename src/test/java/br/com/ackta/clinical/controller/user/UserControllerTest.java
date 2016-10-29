@@ -33,7 +33,7 @@ public class UserControllerTest extends ControllerTest {
 	private static final String MAIL4 = "mail4@ackta.com.br";
 	private static final String NAME4 = "Name4";
 	private static final String PASSWORD4 = "password4";
-	private static final String DEFAULT_USER = "DEVELOPER";
+	private static final String DEFAULT_USER = "desenv";
 
 	private UserTO createTO(String name, String password, String username, String email) {
 		final UserTO to = new UserTO();
@@ -68,7 +68,7 @@ public class UserControllerTest extends ControllerTest {
 	public void insertReapeatedMail() throws Exception {
 		final UserTO to = createTO(NAME4, PASSWORD4, USERNAME4, MAIL2);
 		insert(to).andExpect(MockMvcResultMatchers.status().isBadRequest())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("userController.user.alreadyExists"));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("userHelper.user.alreadyExists"));
 	}
 
 	@Test

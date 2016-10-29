@@ -1,7 +1,7 @@
 /*
  * SerializableResourceBundleMessageSource.java		26/06/2015
- * 
- * Copyright (C) 2015 FAPESP. All Rights Reserved.
+ *
+ * Copyright (C) 2016 ACKTA. All Rights Reserved.
  */
 package br.com.ackta.clinical.application;
 
@@ -11,19 +11,19 @@ import java.util.Properties;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 /**
- * 
- * 
- * @author	RMendonca
+ *
+ *
+ * @author RMendonca
  * @version @version@
- * @since	@since@
+ * @since @since@
  */
 public class SerializableResourceBundleMessageSource extends ReloadableResourceBundleMessageSource {
-	 
-    public Properties getAllProperties(Locale locale) {
-        clearCacheIncludingAncestors();
-        final PropertiesHolder propertiesHolder = getMergedProperties(locale);
-        final Properties properties = propertiesHolder.getProperties();
- 
-        return properties;
-    }
+
+	public Properties getAllProperties(Locale locale) {
+		clearCacheIncludingAncestors();
+		final PropertiesHolder propertiesHolder = getMergedProperties(locale);
+		final Properties properties = propertiesHolder.getProperties();
+
+		return properties;
+	}
 }

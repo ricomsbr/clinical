@@ -5,29 +5,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import br.com.ackta.clinical.business.service.IUserService;
+import br.com.ackta.clinical.business.service.IPatientService;
 import br.com.ackta.clinical.business.service.exception.EntityNotFoundException;
 import br.com.ackta.clinical.business.service.exception.EntitytAlreadyExistsException;
 import br.com.ackta.clinical.controller.util.ControllerException;
-import br.com.ackta.clinical.model.entity.User;
+import br.com.ackta.clinical.model.entity.Patient;
 
 @Service
-public class UserHelper {
+public class PatientHelper {
 
-	private final IUserService userService;
+	private final IPatientService patientService;
 
 	@Autowired
-	public UserHelper(IUserService service) {
-		this.userService = service;
+	public PatientHelper(IPatientService service) {
+		this.patientService = service;
 	}
 
-	public UserTO save(UserTO userTO) {
-		userTO.getId();
-		User obj = userTO.getEntity();
-		UserTO result = null;
+	public PatientTO save(PatientTO patientTO) {
+		patientTO.getId();
+		Patient obj = patientTO.getEntity();
+		PatientTO result = null;
 		try {
-			User savedElement = userService.save(obj);
-			result = new UserTO(savedElement);
+			Patient savedElement = patientService.save(obj);
+			result = new PatientTO(savedElement);
 		} catch (EntitytAlreadyExistsException ex) {
 			throw new ControllerException(HttpStatus.BAD_REQUEST, this.getClass(), ex);
 		}
@@ -36,7 +36,7 @@ public class UserHelper {
 
 	public ResponseEntity<Void> delete(Long id) {
 		try {
-			userService.delete(id);
+			patientService.delete(id);
 		} catch (final EntityNotFoundException ex) {
 			throw new ControllerException(HttpStatus.BAD_REQUEST, this.getClass(), ex);
 		}
