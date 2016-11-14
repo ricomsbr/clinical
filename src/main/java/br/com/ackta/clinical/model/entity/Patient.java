@@ -1,52 +1,75 @@
 package br.com.ackta.clinical.model.entity;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Version;
-
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name = "patient")
-@SQLDelete(sql = "UPDATE patient SET active = 0 WHERE id = ? AND version = ?")
-@Where(clause = "active = 1")
+//@Entity
+//@Table(name = "patient")
+//@SQLDelete(sql = "UPDATE patient SET active = 0 WHERE id = ? AND version = ?")
+//@Where(clause = "active = 1")
+@Document(collection = "patient")
 public class Patient implements IPatient {
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
 
 	private static final long serialVersionUID = -8785925386745821405L;
 
+	// @Id
+	// @SequenceGenerator(name = "sq_patient", sequenceName = "sq_patient")
+	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+	// "sq_patient")
+	// @Column(name = "id")
 	@Id
-	@SequenceGenerator(name = "sq_patient", sequenceName = "sq_patient")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_patient")
-	@Column(name = "id")
-	private Long id;
+	private ObjectId id;
 
-	@Version
-	@Column(name = "version", nullable = false)
+	// @Version
+	// @Column(name = "version", nullable = false)
+	@Field
 	private Long version;
 
-	@Column(name = "active", nullable = false)
+	// @Column(name = "active", nullable = false)
+	@Field
 	private boolean active;
 
-	@Column(name = "name", nullable = false)
+	// TODO
+	// @Column(name = "name", nullable = false)
+	@Field
 	private String name;
 
-	@Column(name = "birthDate", nullable = true)
-	private LocalDate birthDate;
-
-	@Column(name = "gender", nullable = false)
-	private Gender gender;
-
-	@Column(name = "cpf", nullable = true)
+	// TODO
+	// @Column(name = "cpf", nullable = true)
+	@Field
 	private String cpf;
+
+	// TODO
+	// @Column(name = "gender", nullable = false)
+	@Field()
+	private Gender gender;
 
 	@Override
 	public Long getVersion() {
@@ -64,48 +87,12 @@ public class Patient implements IPatient {
 	}
 
 	@Override
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
 	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public LocalDate getBirthDate() {
-		return birthDate;
-	}
-
-	@Override
-	public Gender getGender() {
-		return gender;
-	}
-
-	@Override
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	@Override
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

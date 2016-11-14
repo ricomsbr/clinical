@@ -5,17 +5,20 @@ package br.com.ackta.clinical.controller.patient;
 
 import javax.validation.Valid;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ackta.clinical.application.security.UserLogin;
 import br.com.ackta.clinical.business.helper.PatientHelper;
 import br.com.ackta.clinical.business.helper.PatientTO;
 
@@ -34,7 +37,7 @@ public class PatientController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public PatientTO save(@RequestBody @Valid PatientTO patientTO) {
+	public PatientTO save(@AuthenticationPrincipal UserLogin user, @RequestBody @Valid PatientTO patientTO) {
 
 		LOGGER.info("Method save initialized. Set size: [{}] ", new Object[] { patientTO });
 		PatientTO result = null;
@@ -44,7 +47,7 @@ public class PatientController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
+	public ResponseEntity<Void> delete(@PathVariable ObjectId id) {
 		LOGGER.info("Method delete initialized. Remove patient id ", new Object[] { id });
 		ResponseEntity<Void> result = helper.delete(id);
 		return result;

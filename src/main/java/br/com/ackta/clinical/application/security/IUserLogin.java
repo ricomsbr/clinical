@@ -1,8 +1,10 @@
 package br.com.ackta.clinical.application.security;
 
+import org.bson.types.ObjectId;
+
 public interface IUserLogin {
 
-	Long getId();
+	ObjectId getId();
 
 	String getName();
 

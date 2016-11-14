@@ -1,5 +1,6 @@
 package br.com.ackta.clinical.business.helper;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class UserHelper {
 		return result;
 	}
 
-	public ResponseEntity<Void> delete(Long id) {
+	public ResponseEntity<Void> delete(ObjectId id) {
 		try {
 			userService.delete(id);
 		} catch (final EntityNotFoundException ex) {

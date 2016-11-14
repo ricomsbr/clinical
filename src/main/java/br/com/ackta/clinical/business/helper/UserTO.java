@@ -3,19 +3,15 @@
  */
 package br.com.ackta.clinical.business.helper;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
-import javax.measure.Quantity;
-import javax.measure.quantity.Length;
-import javax.measure.quantity.Mass;
 import javax.validation.constraints.NotNull;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.com.ackta.clinical.model.entity.Gender;
 import br.com.ackta.clinical.model.entity.IUser;
 import br.com.ackta.clinical.model.entity.User;
 
@@ -23,7 +19,7 @@ public class UserTO implements IUser {
 
 	private static final long serialVersionUID = -6681492623640858693L;
 
-	private Long id;
+	private ObjectId id;
 
 	@NotNull(message = "{active.null}")
 	private boolean active = true;
@@ -42,16 +38,6 @@ public class UserTO implements IUser {
 	@NotNull(message = "{mail.null}")
 	private String mail;
 
-	private LocalDate birthDate;
-
-	private Gender gender;
-
-	private Quantity<Length> height;
-
-	private String mobile;
-
-	private Quantity<Mass> weight;
-
 	public UserTO() {
 		super();
 	}
@@ -64,12 +50,12 @@ public class UserTO implements IUser {
 	}
 
 	@Override
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
 	@Override
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -92,6 +78,7 @@ public class UserTO implements IUser {
 		this.version = version;
 	}
 
+	@Override
 	public String getUsername() {
 		return username;
 	}
@@ -105,10 +92,12 @@ public class UserTO implements IUser {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -118,57 +107,12 @@ public class UserTO implements IUser {
 	}
 
 	@Override
-	public LocalDate getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	@Override
-	public Gender getGender() {
-		return gender;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	@Override
-	public Quantity<Length> getHeight() {
-		return height;
-	}
-
-	public void setHeight(Quantity<Length> height) {
-		this.height = height;
-	}
-
-	@Override
 	public String getMail() {
 		return mail;
 	}
 
 	public void setMail(String mail) {
 		this.mail = mail;
-	}
-
-	@Override
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	@Override
-	public Quantity<Mass> getWeight() {
-		return weight;
-	}
-
-	public void setWeight(Quantity<Mass> weight) {
-		this.weight = weight;
 	}
 
 	/**

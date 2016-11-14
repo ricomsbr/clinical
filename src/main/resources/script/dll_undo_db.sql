@@ -1,2 +1,0 @@
-DROP TABLE ackta_user CASCADE CONSTRAINTS;
-DROP SEQUENCE sq_default;

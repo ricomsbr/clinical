@@ -16,6 +16,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import br.com.ackta.clinical.application.security.UserLoginDetailsService;
+import br.com.ackta.clinical.model.entity.User;
 import br.com.ackta.clinical.model.repository.UserRepository;
 
 /**
@@ -32,16 +33,17 @@ import br.com.ackta.clinical.model.repository.UserRepository;
 @EnableAutoConfiguration
 @ScanOnlyForTest
 public class TestApplication {
+	private static final String DEFAULT_USER = "desenv";
 
 	public static void main(String[] args) {
 		SpringApplication.run(TestApplication.class, args);
 	}
 
 	@Autowired
-	private UserRepository userRepository;
-
 	@Bean
-	public UserLoginDetailsService userDetailsService() {
+	public UserLoginDetailsService userDetailsService(UserRepository userRepository) {
+		User user = new User(DEFAULT_USER, "password", "name", true);
+		userRepository.insert(user);
 		return new UserLoginDetailsService(userRepository);
 	}
 

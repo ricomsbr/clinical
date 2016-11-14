@@ -7,7 +7,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import br.com.ackta.clinical.model.entity.IPersistable;
@@ -18,7 +18,8 @@ import br.com.ackta.clinical.model.entity.IPersistable;
 		@ComponentScan.Filter(type = FilterType.ANNOTATION, value = { ScanOnlyForTest.class }) })
 @EnableTransactionManagement
 // @ScanExceptForTest
-@EnableJpaRepositories("br.com.ackta.clinical.model.repository")
+// @EnableJpaRepositories("br.com.ackta.clinical.model.repository")
+@EnableMongoRepositories("br.com.ackta.clinical.model.repository")
 public class ClinicalApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

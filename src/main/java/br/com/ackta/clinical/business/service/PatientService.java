@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.ackta.clinical.business.service.exception.EntityNotFoundException;
-import br.com.ackta.clinical.business.service.exception.EntitytAlreadyExistsException;
 import br.com.ackta.clinical.model.entity.Patient;
 import br.com.ackta.clinical.model.repository.PatientRepository;
 
@@ -25,7 +25,7 @@ public class PatientService implements IPatientService {
 	@Transactional
 	public Patient save(Patient newData) {
 		checkConsistency(newData);
-		final Long id = newData.getId();
+		final ObjectId id = newData.getId();
 		Patient toSave = null;
 		if (Objects.nonNull(id)) { // Update
 			toSave = findById(id);
@@ -43,13 +43,14 @@ public class PatientService implements IPatientService {
 	 * @param patient
 	 */
 	private void checkConsistency(Patient patient) {
-		String cpf = patient.getCpf();
-		if (Objects.nonNull(cpf)) {
-			Long countByCpf = repository.countByCpf(cpf);
-			if (countByCpf > 0) {
-				throw new EntitytAlreadyExistsException(Patient.class, cpf);
-			}
-		}
+		// TODO
+		// String cpf = patient.toString().getCpf();
+		// if (Objects.nonNull(cpf)) {
+		// Long countByCpf = repository.countByCpf(cpf);
+		// if (countByCpf > 0) {
+		// throw new EntitytAlreadyExistsException(Patient.class, cpf);
+		// }
+		// }
 	}
 
 	@Override
@@ -59,19 +60,22 @@ public class PatientService implements IPatientService {
 	}
 
 	@Override
-	public Patient findById(Long id) {
+	public Patient findById(ObjectId id) {
 		return Optional.of(repository.findOne(id)).orElseThrow(() -> new EntityNotFoundException(Patient.class));
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(ObjectId id) {
 		Patient patient = findById(id);
 		repository.delete(patient.getId());
 	}
 
 	@Override
 	public Patient findByCpf(String cpf) {
-		return repository.findByCpf(cpf).orElseThrow(() -> new EntityNotFoundException(Patient.class));
+		// TODO
+		return null;
+		// return repository.findByCpf(cpf).orElseThrow(() -> new
+		// EntityNotFoundException(Patient.class));
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,7 @@ public class UserService implements IUserService {
 	@Transactional
 	public User save(User newData) {
 		checkConsistency(newData);
-		final Long id = newData.getId();
+		final ObjectId id = newData.getId();
 		User toSave = null;
 		if (Objects.nonNull(id)) { // Update
 			toSave = findById(id);
@@ -50,12 +51,12 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User findById(Long id) {
+	public User findById(ObjectId id) {
 		return Optional.of(repository.findOne(id)).orElseThrow(() -> new EntityNotFoundException(User.class));
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(ObjectId id) {
 		User user = findById(id);
 		repository.delete(user.getId());
 	}

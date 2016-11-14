@@ -18,13 +18,11 @@ import br.com.ackta.clinical.model.repository.UserRepository;
 
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@ScanExceptForTest
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+	public void configureGlobal(AuthenticationManagerBuilder auth, UserRepository userRepository) throws Exception {
 		auth.userDetailsService(new UserLoginDetailsService(userRepository));
 	}
 

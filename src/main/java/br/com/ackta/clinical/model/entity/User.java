@@ -1,44 +1,41 @@
 package br.com.ackta.clinical.model.entity;
 
-import java.time.LocalDate;
-
-import javax.measure.Quantity;
-import javax.measure.quantity.Length;
-import javax.measure.quantity.Mass;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.Version;
 
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name = "ackta_user")
-@SQLDelete(sql = "UPDATE ackta_user SET active = 0 WHERE id = ? AND version = ?")
-@Where(clause = "active = 1")
+@Document(collection = "ackta_user")
 public class User implements IUser {
 
 	private static final long serialVersionUID = -3659855708555492709L;
 
 	@Id
-	@SequenceGenerator(name = "sq_user", sequenceName = "sq_user")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_user")
-	@Column(name = "id")
-	private Long id;
+	private ObjectId id;
 
-	@Version
-	@Column(name = "version", nullable = false)
+	@Field("version")
 	private Long version;
 
-	@Column(name = "active", nullable = false)
+	@Field("active")
 	private boolean active;
+
+	@Field("mail")
+	private String mail;
+
+	public User() {
+		super();
+	}
+
+	public User(String username, String password, String name, boolean isActive) {
+		this();
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.active = isActive;
+	}
 
 	@Override
 	public Long getVersion() {
@@ -55,35 +52,17 @@ public class User implements IUser {
 		return active;
 	}
 
-	@Column(name = "name", nullable = false)
+	@Field("name")
 	private String name;
 
-	@Column(name = "birthDate", nullable = true)
-	private LocalDate birthDate;
-
-	@Column(name = "gender", nullable = true)
-	private Gender gender;
-
-	@Column(name = "mail", nullable = false, unique = true)
-	private String mail;
-
-	@Column(name = "mobile", nullable = true)
-	private String mobile;
-
-	@Transient
-	private Quantity<Mass> weight;
-
-	@Transient
-	private Quantity<Length> height;
-
-	@Column(name = "password", nullable = false)
+	@Column(name = "password")
 	private String password;
 
-	@Column(name = "username", nullable = false)
+	@Column(name = "username")
 	private String username;
 
 	@Override
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
@@ -93,73 +72,22 @@ public class User implements IUser {
 	}
 
 	@Override
-	public LocalDate getBirthDate() {
-		return birthDate;
-	}
-
-	@Override
-	public Gender getGender() {
-		return gender;
-	}
-
-	@Override
-	public String getMail() {
-		return mail;
-	}
-
-	@Override
-	public String getMobile() {
-		return mobile;
-	}
-
-	@Override
-	public Quantity<Mass> getWeight() {
-		return weight;
-	}
-
-	@Override
-	public Quantity<Length> getHeight() {
-		return height;
-	}
-
 	public String getPassword() {
 		return password;
 	}
 
+	@Override
 	public String getUsername() {
 		return username;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public void setWeight(Quantity<Mass> weight) {
-		this.weight = weight;
-	}
-
-	public void setHeight(Quantity<Length> height) {
-		this.height = height;
-	}
-
 	@Override
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -169,6 +97,11 @@ public class User implements IUser {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	@Override
+	public String getMail() {
+		return mail;
 	}
 
 	/**
@@ -181,4 +114,5 @@ public class User implements IUser {
 		BeanUtils.copyProperties(this, user, UNMERGED_PROPERTIES);
 		return user;
 	}
+
 }

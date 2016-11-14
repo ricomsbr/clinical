@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,7 +21,7 @@ public class PatientTO implements IPatient {
 
 	private static final long serialVersionUID = -990559040902854885L;
 
-	private Long id;
+	private ObjectId id;
 
 	@NotNull(message = "{active.null}")
 	private boolean active = true;
@@ -48,12 +49,12 @@ public class PatientTO implements IPatient {
 	}
 
 	@Override
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
 	@Override
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -76,7 +77,6 @@ public class PatientTO implements IPatient {
 		this.version = version;
 	}
 
-	@Override
 	public String getCpf() {
 		return cpf;
 	}
@@ -85,7 +85,6 @@ public class PatientTO implements IPatient {
 		this.cpf = cpf;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
@@ -94,7 +93,6 @@ public class PatientTO implements IPatient {
 		this.name = name;
 	}
 
-	@Override
 	public LocalDate getBirthDate() {
 		return birthDate;
 	}
@@ -103,7 +101,6 @@ public class PatientTO implements IPatient {
 		this.birthDate = birthDate;
 	}
 
-	@Override
 	public Gender getGender() {
 		return gender;
 	}

@@ -13,7 +13,7 @@ logging:
   
 spring:
   profiles:
-    active: developement,oracle
+    active: tests
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     serialization:
@@ -34,12 +34,12 @@ cluster:
 
 spring:
   profiles: tests
-  session:
-    store-type: none
   datasource:
     url: jdbc:h2:mem:mydb;INIT=CREATE SCHEMA IF NOT EXISTS dap;DB_CLOSE_ON_EXIT=FALSE;Mode=Oracle;
   jpa: 
-    database-platform: org.hibernate.dialect.Oracle10gDialect
+    database-platform: org.hibernate.dialect.Oracle10gDialect    
+  session:
+    store-type: none
     
 ---
 
@@ -53,7 +53,9 @@ spring:
     tomcat:
       max-active: 5
       min-idle: 1
-
+  data:
+    mongodb:
+      uri: mongodb://localhost:9055/clinicaldb
 ---
 
 spring:

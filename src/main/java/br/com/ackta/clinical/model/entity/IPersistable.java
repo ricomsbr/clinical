@@ -7,6 +7,8 @@ package br.com.ackta.clinical.model.entity;
 
 import java.io.Serializable;
 
+import org.bson.types.ObjectId;
+
 /**
  *
  *
@@ -18,11 +20,11 @@ public interface IPersistable extends Serializable {
 
 	Long getVersion();
 
-	Long getId();
+	ObjectId getId();
 
 	void setVersion(Long version);
 
-	void setId(Long id);
+	void setId(ObjectId id);
 
 	boolean isActive();
 

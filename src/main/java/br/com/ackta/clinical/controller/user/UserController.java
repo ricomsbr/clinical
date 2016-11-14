@@ -5,6 +5,7 @@ package br.com.ackta.clinical.controller.user;
 
 import javax.validation.Valid;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
+	public ResponseEntity<Void> delete(@PathVariable ObjectId id) {
 		LOGGER.info("Method delete initialized. Remove user id ", new Object[] { id });
 		ResponseEntity<Void> result = helper.delete(id);
 		return result;

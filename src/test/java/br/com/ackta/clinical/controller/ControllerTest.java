@@ -15,6 +15,8 @@ import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import junit.framework.TestCase;
+
 /**
  *
  *
@@ -22,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @version @version@
  * @since @since@
  */
-public class ControllerTest {
+public class ControllerTest extends TestCase {
 
 	private HttpMessageConverter<Object> mappingJackson2HttpMessageConverter;
 	protected MockMvc mockMvc;

@@ -8,6 +8,7 @@ package br.com.ackta.clinical.application.security;
 import java.util.Collection;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,7 +21,7 @@ public class UserLogin implements IUserLogin, UserDetails {
 	/** default uid */
 	private static final long serialVersionUID = -2078545227379984884L;
 
-	private final Long id;
+	private final ObjectId id;
 
 	private final String username;
 
@@ -48,7 +49,7 @@ public class UserLogin implements IUserLogin, UserDetails {
 	 * @param authorities
 	 *            the user's roles
 	 */
-	public UserLogin(long id, String username, String password, String name, boolean isActive,
+	public UserLogin(ObjectId id, String username, String password, String name, boolean isActive,
 			boolean isCredentialsExpired, List<GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
@@ -128,7 +129,7 @@ public class UserLogin implements IUserLogin, UserDetails {
 	}
 
 	@Override
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
