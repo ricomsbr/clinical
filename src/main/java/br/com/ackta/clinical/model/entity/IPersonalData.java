@@ -2,20 +2,25 @@ package br.com.ackta.clinical.model.entity;
 
 import java.time.LocalDate;
 
+import org.springframework.beans.BeanUtils;
+
 public interface IPersonalData extends IPersistable {
 	static final String[] UNMERGED_PROPERTIES = { "id", "active", "version" };
 
-	String getName();
-
 	LocalDate getBirthDate();
-
-	Gender getGender();
 
 	String getCpf();
 
+	Gender getGender();
+
+	String getName();
+
 	String getRg();
 
-	String getSus();
+	public default IPersonalData merge(IPersonalData newData) {
+		BeanUtils.copyProperties(this, newData, UNMERGED_PROPERTIES);
+		return newData;
+	}
 	//
 	// IAddress getAddress();
 	//

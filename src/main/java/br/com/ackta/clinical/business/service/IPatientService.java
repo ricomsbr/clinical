@@ -4,16 +4,18 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
-import br.com.ackta.clinical.model.entity.Patient;
+import br.com.ackta.clinical.model.entity.IPatient;
 
 public interface IPatientService {
-	Patient save(Patient patient);
-
-	List<Patient> findAll();
-
-	Patient findById(ObjectId id);
-
 	void delete(ObjectId id);
 
-	Patient findByCpf(String cpf);
+	List<IPatient> findAll();
+
+	IPatient findByCpf(String cpf);
+
+	IPatient findById(ObjectId id);
+
+	IPatient findByPersonalDataId(ObjectId personalDataId);
+
+	IPatient save(IPatient patient);
 }

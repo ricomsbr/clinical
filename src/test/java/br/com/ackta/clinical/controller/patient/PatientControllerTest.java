@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.ackta.clinical.application.TestApplication;
-import br.com.ackta.clinical.business.helper.PatientTO;
+import br.com.ackta.clinical.business.helper.PersonalDataTO;
 import br.com.ackta.clinical.controller.ControllerTest;
 import br.com.ackta.clinical.model.entity.Gender;
 
@@ -38,55 +38,55 @@ public class PatientControllerTest extends ControllerTest {
 	private static final LocalDate DATE3 = LocalDate.of(1980, 3, 30);
 	private static final String DEFAULT_USER = "desenv";
 
-	private PatientTO createTO(String name, String cpf, LocalDate birthDate, Gender gender) {
-		final PatientTO to = new PatientTO();
-		to.setName(name);
-		to.setCpf(cpf);
-		to.setBirthDate(birthDate);
-		to.setGender(gender);
-		return to;
+	private PersonalDataTO createTO(String name, String cpf, LocalDate birthDate, Gender gender) {
+		final PersonalDataTO result = new PersonalDataTO();
+		result.setName(name);
+		result.setCpf(cpf);
+		result.setBirthDate(birthDate);
+		result.setGender(gender);
+		return result;
 	}
 
-	@Test
-	@WithUserDetails(DEFAULT_USER)
-	public void insertOk() throws Exception {
-		final PatientTO to = createTO(NAME2, CPF2, DATE2, Gender.MALE);
-		insert(to).andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.name").value(NAME2))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.cpf").value(CPF2))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(Gender.MALE.name()))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
-	}
-
-	@Test()
-	@WithUserDetails(DEFAULT_USER)
-	@Ignore
-	public void insertReapeatedCpf() throws Exception {
-		final PatientTO to = createTO(NAME2, "11122233344", DATE2, Gender.MALE);
-		insert(to).andExpect(MockMvcResultMatchers.status().isBadRequest())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("patientHelper.patient.alreadyExists"))
-				.andReturn().getResponse().getContentAsString();
-	}
-
-	@Test
-	@WithUserDetails(DEFAULT_USER)
-	@Ignore
-	public void insertNullName() throws Exception {
-		final PatientTO to = createTO(null, CPF3, DATE3, Gender.MALE);
-		insert(to).andExpect(MockMvcResultMatchers.status().isBadRequest());
+	private ResultActions insert(final PersonalDataTO to) throws Exception, IOException {
+		return this.mockMvc.perform(
+				MockMvcRequestBuilders.post("/patient").contentType(MediaType.APPLICATION_JSON).content(json(to)));
 	}
 
 	@Test
 	@WithUserDetails(DEFAULT_USER)
 	@Ignore
 	public void insertNullCpf() throws Exception {
-		final PatientTO to1 = createTO(NAME3, null, DATE3, Gender.MALE);
+		final PersonalDataTO to1 = createTO(NAME3, null, DATE3, Gender.MALE);
 		insert(to1).andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
-	private ResultActions insert(final PatientTO to) throws Exception, IOException {
-		return this.mockMvc.perform(
-				MockMvcRequestBuilders.post("/patient").contentType(MediaType.APPLICATION_JSON).content(json(to)));
+	@Test
+	@WithUserDetails(DEFAULT_USER)
+	@Ignore
+	public void insertNullName() throws Exception {
+		final PersonalDataTO to = createTO(null, CPF3, DATE3, Gender.MALE);
+		insert(to).andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test
+	@WithUserDetails(DEFAULT_USER)
+	public void insertOk() throws Exception {
+		final PersonalDataTO to = createTO(NAME2, CPF2, DATE2, Gender.MALE);
+		insert(to).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.personalData.name").value(NAME2))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.personalData.cpf").value(CPF2))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.personalData.gender").value(Gender.MALE.name()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.personalData.id").isNotEmpty());
+	}
+
+	@Test()
+	@WithUserDetails(DEFAULT_USER)
+	@Ignore
+	public void insertReapeatedCpf() throws Exception {
+		final PersonalDataTO to = createTO(NAME2, "11122233344", DATE2, Gender.MALE);
+		insert(to).andExpect(MockMvcResultMatchers.status().isBadRequest())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("patientHelper.patient.alreadyExists"))
+				.andReturn().getResponse().getContentAsString();
 	}
 }

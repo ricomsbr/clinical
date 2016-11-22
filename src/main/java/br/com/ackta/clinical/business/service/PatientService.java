@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.ackta.clinical.business.service.exception.EntityNotFoundException;
+import br.com.ackta.clinical.model.entity.IPatient;
 import br.com.ackta.clinical.model.entity.Patient;
 import br.com.ackta.clinical.model.repository.PatientRepository;
 
 @Service
+@Transactional
 public class PatientService implements IPatientService {
 
 	private PatientRepository repository;
@@ -21,28 +23,13 @@ public class PatientService implements IPatientService {
 		repository = rep;
 	}
 
-	@Override
-	@Transactional
-	public Patient save(Patient newData) {
-		checkConsistency(newData);
-		final ObjectId id = newData.getId();
-		Patient toSave = null;
-		if (Objects.nonNull(id)) { // Update
-			toSave = findById(id);
-			toSave = toSave.merge(newData);
-		} else { // Insert
-			toSave = newData;
-		}
-		return repository.save(toSave);
-	}
-
 	/**
 	 * Se o CPF for diferente de null ele não poderá se igual ao de outra
 	 * pessoa.
 	 *
 	 * @param patient
 	 */
-	private void checkConsistency(Patient patient) {
+	private void checkConsistency(IPatient patient) {
 		// TODO
 		// String cpf = patient.toString().getCpf();
 		// if (Objects.nonNull(cpf)) {
@@ -54,28 +41,48 @@ public class PatientService implements IPatientService {
 	}
 
 	@Override
-	@Transactional
-	public List<Patient> findAll() {
-		return repository.findAll();
-	}
-
-	@Override
-	public Patient findById(ObjectId id) {
-		return Optional.of(repository.findOne(id)).orElseThrow(() -> new EntityNotFoundException(Patient.class));
-	}
-
-	@Override
 	public void delete(ObjectId id) {
-		Patient patient = findById(id);
+		IPatient patient = findById(id);
 		repository.delete(patient.getId());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Patient findByCpf(String cpf) {
+	public List<IPatient> findAll() {
+		return (List<IPatient>) (List<?>) repository.findAll();
+	}
+
+	@Override
+	public IPatient findByCpf(String cpf) {
 		// TODO
 		return null;
 		// return repository.findByCpf(cpf).orElseThrow(() -> new
 		// EntityNotFoundException(Patient.class));
+	}
+
+	@Override
+	public IPatient findById(ObjectId id) {
+		return Optional.of(repository.findOne(id)).orElseThrow(() -> new EntityNotFoundException(Patient.class));
+	}
+
+	@Override
+	public IPatient findByPersonalDataId(ObjectId personalDataId) {
+		repository.findByPersonalData_Id(personalDataId);
+		return null;
+	}
+
+	@Override
+	public IPatient save(IPatient newData) {
+		checkConsistency(newData);
+		final ObjectId id = newData.getId();
+		IPatient toSave = null;
+		if (Objects.nonNull(id)) { // Update
+			toSave = findById(id);
+			toSave = toSave.merge(newData);
+		} else { // Insert
+			toSave = newData;
+		}
+		return repository.save((Patient) toSave);
 	}
 
 }

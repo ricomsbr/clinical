@@ -9,7 +9,6 @@ import br.com.ackta.clinical.model.entity.Patient;
 @Repository
 public interface PatientRepository extends MongoRepository<Patient, ObjectId> {
 
-	// Optional<Patient> findByCpf(String cpf);
-	//
-	// Long countByCpf(String cpf);
+	Patient findByPersonalData_Id(ObjectId personalDataId);
+
 }

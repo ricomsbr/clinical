@@ -14,6 +14,7 @@ import br.com.ackta.clinical.model.entity.User;
 import br.com.ackta.clinical.model.repository.UserRepository;
 
 @Service
+@Transactional
 public class UserService implements IUserService {
 
 	private UserRepository repository;
@@ -22,8 +23,34 @@ public class UserService implements IUserService {
 		repository = rep;
 	}
 
+	private void checkConsistency(User user) {
+		Long countByMail = repository.countByMail(user.getMail());
+		if (countByMail > 0) {
+			throw new EntitytAlreadyExistsException(User.class);
+		}
+	}
+
 	@Override
-	@Transactional
+	public void delete(ObjectId id) {
+		User user = findById(id);
+		repository.delete(user.getId());
+	}
+
+	@Override
+	public List<User> findAll() {
+		return repository.findAll();
+	}
+
+	@Override
+	public User findById(ObjectId id) {
+		return Optional.of(repository.findOne(id)).orElseThrow(() -> new EntityNotFoundException(User.class));
+	}
+
+	public User findByUsername(String username) {
+		return repository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException(User.class));
+	}
+
+	@Override
 	public User save(User newData) {
 		checkConsistency(newData);
 		final ObjectId id = newData.getId();
@@ -35,34 +62,6 @@ public class UserService implements IUserService {
 			toSave = newData;
 		}
 		return repository.save(toSave);
-	}
-
-	private void checkConsistency(User user) {
-		Long countByMail = repository.countByMail(user.getMail());
-		if (countByMail > 0) {
-			throw new EntitytAlreadyExistsException(User.class);
-		}
-	}
-
-	@Override
-	@Transactional
-	public List<User> findAll() {
-		return repository.findAll();
-	}
-
-	@Override
-	public User findById(ObjectId id) {
-		return Optional.of(repository.findOne(id)).orElseThrow(() -> new EntityNotFoundException(User.class));
-	}
-
-	@Override
-	public void delete(ObjectId id) {
-		User user = findById(id);
-		repository.delete(user.getId());
-	}
-
-	public User findByUsername(String username) {
-		return repository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException(User.class));
 	}
 
 }

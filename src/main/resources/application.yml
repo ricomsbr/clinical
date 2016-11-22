@@ -34,10 +34,6 @@ cluster:
 
 spring:
   profiles: tests
-  datasource:
-    url: jdbc:h2:mem:mydb;INIT=CREATE SCHEMA IF NOT EXISTS dap;DB_CLOSE_ON_EXIT=FALSE;Mode=Oracle;
-  jpa: 
-    database-platform: org.hibernate.dialect.Oracle10gDialect    
   session:
     store-type: none
     
@@ -60,8 +56,4 @@ spring:
 
 spring:
   profiles: development
-  datasource:
-    url: jdbc:h2:mem:mydb;INIT=CREATE SCHEMA IF NOT EXISTS dap;DB_CLOSE_ON_EXIT=FALSE;Mode=Oracle;
-  jpa: 
-    database-platform: org.hibernate.dialect.Oracle10gDialect    
  

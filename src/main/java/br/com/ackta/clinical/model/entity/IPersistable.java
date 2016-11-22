@@ -18,14 +18,14 @@ import org.bson.types.ObjectId;
  */
 public interface IPersistable extends Serializable {
 
-	Long getVersion();
-
 	ObjectId getId();
 
-	void setVersion(Long version);
+	Long getVersion();
+
+	boolean isActive();
 
 	void setId(ObjectId id);
 
-	boolean isActive();
+	void setVersion(Long version);
 
 }

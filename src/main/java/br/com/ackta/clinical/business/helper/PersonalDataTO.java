@@ -1,42 +1,51 @@
-package br.com.ackta.clinical.model.entity;
+package br.com.ackta.clinical.business.helper;
 
 import java.time.LocalDate;
+import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document
-public class PersonalData implements IPersonalData {
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-	private static final long serialVersionUID = -2383673733659048451L;
+import br.com.ackta.clinical.model.entity.Gender;
+import br.com.ackta.clinical.model.entity.IPersonalData;
+import br.com.ackta.clinical.model.entity.PersonalData;
 
-	@Id
-	private ObjectId id;
+public class PersonalDataTO implements IPersonalData {
 
-	@Version
-	private Long version;
+	private static final long serialVersionUID = -4909408341248192478L;
 
-	@Field
+	@NotNull(message = "{active.null}")
 	private boolean active;
 
-	@Field
-	private String name;
-
-	@Field
 	private LocalDate birthDate;
 
-	@Field
-	private Gender gender;
-
-	@Field
 	private String cpf;
 
-	@Field
+	private Gender gender;
+
+	private ObjectId id;
+
+	@NotNull(message = "{name.null}")
+	private String name;
+
 	private String rg;
+
+	private Long version;
+
+	public PersonalDataTO() {
+		super();
+	}
+
+	public PersonalDataTO(IPersonalData newData) {
+		this();
+		if (Objects.nonNull(newData)) {
+			BeanUtils.copyProperties(newData, this);
+		}
+	}
 
 	@Override
 	public LocalDate getBirthDate() {
@@ -46,6 +55,16 @@ public class PersonalData implements IPersonalData {
 	@Override
 	public String getCpf() {
 		return cpf;
+	}
+
+	/**
+	 * @return
+	 */
+	@JsonIgnore
+	public PersonalData getEntity() {
+		final PersonalData result = new PersonalData();
+		BeanUtils.copyProperties(this, result);
+		return result;
 	}
 
 	@Override
@@ -76,17 +95,6 @@ public class PersonalData implements IPersonalData {
 	@Override
 	public boolean isActive() {
 		return active;
-	}
-
-	/**
-	 * Updates a binded object.
-	 *
-	 * @param user
-	 * @return
-	 */
-	public IPersonalData merge(IPersonalData user) {
-		BeanUtils.copyProperties(this, user, UNMERGED_PROPERTIES);
-		return user;
 	}
 
 	public void setBirthDate(LocalDate birthDate) {
